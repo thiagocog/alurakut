@@ -1,27 +1,60 @@
-import styled from 'styled-components'
+import MainGrid from '../src/components/MainGrid'
+import Box from '../src/components/Box'
+import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
+import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
-const Title = styled.h1`
-  font-size: 50px;
-  color: ${({ theme }) => theme.colors.primary};
-`
-
-const Box = styled.div`
-  background-color: #ffffff;
-  border-radius: 8px;
-`
-
-export default function Home() {
+function ProfileSidebar({ user }) {
   return (
-    <main>
-      <Box>
-        Imagem
-      </Box>
-      <Box>
-        Bem vindo
-      </Box>
-      <Box>
-        Comunidades
-      </Box>
-    </main>
+    <Box>
+      <img src={`https://github.com/${user}.png`} alt="Profile Image" style={{ borderRadius: '8px' }} />
+    </Box>
   )
 }
+
+export default function Home() {
+  const githubUser = 'thiagocog'
+  const pessoasFavoritas = [
+    'juunegreiros',
+    'omariosouto', 
+    'peas', 
+    'rafaballerini', 
+    'marcobrunodev',
+    'felipefialho'
+  ]
+
+  return (
+    <>
+      <AlurakutMenu githubUser={githubUser} />
+      <MainGrid>
+        <div className='profileArea' style={{ gridArea: 'profileArea' }}>
+          <ProfileSidebar user={githubUser} />
+        </div>
+        <div className='welcomeArea' style={{ gridArea: 'welcomeArea' }}>
+          <Box>
+            <h1 className="title">Bem vindo</h1>
+            <OrkutNostalgicIconSet />
+          </Box>
+        </div>
+        <div className='profileRelationsArea' style={{ gridArea: 'profileRelationsArea' }}>
+          <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Pessoas da comunidade ({pessoasFavoritas.length})
+            </h2>
+            <ul>
+              {pessoasFavoritas.map(itemAtual => (
+                <li>
+                  <a href={`/users/${itemAtual}`} key={itemAtual}>
+                    <img src={`https://github.com/${itemAtual}.png`} />
+                    <span>{itemAtual}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </ProfileRelationsBoxWrapper>
+          
+        </div>
+      </MainGrid>
+    </>
+  )
+}
+
