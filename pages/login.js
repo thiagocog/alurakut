@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
+import nookies from 'nookies'
 
 function LoginPage() {
   const [githubUser, setGithubUser] = React.useState('thiagocog')
@@ -28,8 +29,7 @@ function LoginPage() {
                 body: JSON.stringify({ githubUser: githubUser })
             })
             .then(async (respostaDoServer) => {
-              const dadosDaResposta = await respostaDoServer.json()
-              const token = dadosDaResposta.token
+              const { token } = await respostaDoServer.json()
               nookies.set(null, 'USER_TOKEN', token, {
                 path: '/',
                 maxAge: 86400 * 7 

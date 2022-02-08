@@ -13,10 +13,7 @@ export default async function RequestsReciver(req, res) {
       ...req.body
     })
       
-    res.json({
-      dados: 'Any data',
-      record
-    })
+    res.json({ record })
     return
   }
 
